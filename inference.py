@@ -157,8 +157,10 @@ def sample_bivariate_normal(mu_x: torch.Tensor, mu_y: torch.Tensor,
 
 
 def make_image(sequence, sketch_index, name='_output_', path="./visualize/"):
-    """分离strokes, 并画图"""
-    strokes = np.split(sequence, np.where(sequence[:, 2] > 0)[0] + 1)  # 指出所有满足条件的坐标, +1 是因为split类似于[m:n]
+    """Separate strokes and plot the sketch."""
+    strokes = np.split(sequence, np.where(sequence[:, 2] > 0)[0] + 1)
+    # 분할은 [m:n]과 유사하므로 +1 조건을 만족하는 모든 좌표를 지적합니다
+    # Point out all coordinates that satisfy the condition, +1 because split is similar to [m:n]
     fig = plt.figure()
     ax1 = fig.add_subplot(111)
     for s in strokes:
