@@ -229,19 +229,11 @@ class Model:
                 np.savez(f"./{save_middle_path}/npz/{category_name}.npz", z=np.array(result_z_list))
                 result_z_list = []
                 category_flag += 1
-                if 0 <= category_flag < len(sketch_dataset.category):
-                    category_name = sketch_dataset.category[category_flag].split(".")[0]
-                    # Your code that uses category_name
-                    #print(f"Category name: {category_name}")
-                    #print(f"Invalid category flag: {category_flag}")
-                else:
-                    print(f"category_flag : {category_flag}")
-                    category_name = sketch_dataset.category[category_flag]
-                #category_name = sketch_dataset.category[category_flag].split(".")[0]
+                category_name = sketch_dataset.category[category_flag].split(".")[0]
                 count = 0
                 category_count = sketch_dataset.sketches_categroy_count[category_flag]
                 print(f"{category_name} finished")
-            if sketch_index % 100 != 0 or True: #this is always true
+            if sketch_index % 100 != 0 or True:
                 continue
             print(f"drawing {category_name} {count}")
             if hp.use_cuda:
@@ -372,12 +364,8 @@ class Model:
             return next_state.view(1, 1, -1), x, y, q_idx == 1, q_idx == 2
 
     def load(self, encoder_name, decoder_name):
-        if torch.cuda.is_available():
-            saved_encoder = torch.load(encoder_name)
-            saved_decoder = torch.load(decoder_name)
-        else:
-            saved_encoder = torch.load(encoder_name, map_location=torch.device('cpu'))
-            saved_decoder = torch.load(decoder_name, map_location=torch.device('cpu'))
+        saved_encoder = torch.load(encoder_name)
+        saved_decoder = torch.load(decoder_name)
         self.encoder.load_state_dict(saved_encoder)
         self.decoder.load_state_dict(saved_decoder)
 
@@ -405,7 +393,6 @@ if __name__ == "__main__":
                f"./model_save/decoderRNN_epoch_146000.pth")
 
     print(hp.mask_prob, hp.Nmax)
-    
     model.validate(sketch_dataset, save_middle_path=f"result/visualize2/146000/{hp.mask_prob}")
     exit(0)
                          
