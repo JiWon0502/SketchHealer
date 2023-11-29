@@ -265,11 +265,11 @@ class Model:
                 if eos:
                     # print(i)
                     break
-            # # visualize result:
-            # x_sample = np.cumsum(seq_x, 0)  # 累加, 梯形求和
-            # y_sample = np.cumsum(seq_y, 0)
-            # z_sample = np.array(seq_z)
-            # sequence = np.stack([x_sample, y_sample, z_sample]).T
+            # visualize result: 1111
+            x_sample = np.cumsum(seq_x, 0)  # 累加, 梯形求和
+            y_sample = np.cumsum(seq_y, 0)
+            z_sample = np.array(seq_z)
+            sequence = np.stack([x_sample, y_sample, z_sample]).T
             
             # # visualize result:
             _sketch = np.stack([seq_x, seq_y, seq_z]).T
@@ -277,10 +277,12 @@ class Model:
                 sketch_cv = draw_three(_sketch, img_size=256)
             except Exception as e:
                 _sketch = np.zeros((256, 256, 1))
+                print("sketch not drawn")
             os.makedirs(f"./{save_middle_path}/sketch/{category_name}", exist_ok=True)
             cv2.imwrite(f"./{save_middle_path}/sketch/{category_name}/{sketch_index}.jpg", _sketch)
 
-            # make_image(sequence, count - 1, name=f"_{category_name}", path=f"./{save_middle_path}/sketch/")
+            # 1111
+            make_image(sequence, count - 1, name=f"_{category_name}", path=f"./{save_middle_path}/sketch/")
                                                                       
                       
 
