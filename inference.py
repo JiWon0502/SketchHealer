@@ -241,7 +241,7 @@ class Model:
                 count = 0
                 category_count = sketch_dataset.sketches_categroy_count[category_flag]
                 print(f"{category_name} finished")
-            if sketch_index % 100 != 0 or True:
+            if sketch_index % 100 != 0 or True: #this is always true
                 continue
             print(f"drawing {category_name} {count}")
             if hp.use_cuda:
