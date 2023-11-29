@@ -167,8 +167,8 @@ def make_image(sequence, sketch_index, name='_output_', path="./visualize/"):
         plt.plot(s[:, 0], -s[:, 1])
     canvas = plt.get_current_fig_manager().canvas
     canvas.draw()
-    pil_image = PIL.Image.frombytes('RGB', canvas.get_width_height(),
-                                    canvas.tostring_rgb())
+    #pil_image = PIL.Image.frombytes('RGB', canvas.get_width_height(), canvas.tostring_rgb())
+    pil_image = PIL.Image.frombytes('RGB', canvas.get_width_height(), canvas.buffer_rgba())
     os.makedirs(f"{path}/{name}", exist_ok=True)
     name = f"{path}" + str(sketch_index) + name + '.jpg'
     pil_image.save(name, "JPEG")
