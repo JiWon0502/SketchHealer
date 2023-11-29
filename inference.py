@@ -229,12 +229,13 @@ class Model:
                 np.savez(f"./{save_middle_path}/npz/{category_name}.npz", z=np.array(result_z_list))
                 result_z_list = []
                 category_flag += 1
-                category_name = sketch_dataset.category[category_flag].split(".")[0]
-                count = 0
-                category_count = sketch_dataset.sketches_categroy_count[category_flag]
                 print(f"{category_name} finished")
-            if sketch_index % 100 != 0 or True:
-                continue
+                if(category_flag < 17) :
+                    category_name = sketch_dataset.category[category_flag].split(".")[0]
+                    count = 0
+                    category_count = sketch_dataset.sketches_categroy_count[category_flag]
+            #if sketch_index % 100 != 0 or True:
+                #continue
             print(f"drawing {category_name} {count}")
             if hp.use_cuda:
                 sos = torch.Tensor([0, 0, 1, 0, 0]).view(1, 1, -1).cuda()
@@ -267,11 +268,7 @@ class Model:
             # y_sample = np.cumsum(seq_y, 0)
             # z_sample = np.array(seq_z)
             # sequence = np.stack([x_sample, y_sample, z_sample]).T
-                                                       
-                                                                                         
-                                                                                    
-                                                                                            
-
+            
             # # visualize result:
             _sketch = np.stack([seq_x, seq_y, seq_z]).T
             try:
@@ -364,6 +361,12 @@ class Model:
             return next_state.view(1, 1, -1), x, y, q_idx == 1, q_idx == 2
 
     def load(self, encoder_name, decoder_name):
+        if torch.cuda.is_available():
+            saved_encoder = torch.load(encoder_name)
+            saved_decoder = torch.load(decoder_name)
+        else:
+            saved_encoder = torch.load(encoder_name, map_location=torch.device('cpu'))
+            saved_decoder = torch.load(decoder_name, map_location=torch.device('cpu'))
         saved_encoder = torch.load(encoder_name)
         saved_decoder = torch.load(decoder_name)
         self.encoder.load_state_dict(saved_encoder)
