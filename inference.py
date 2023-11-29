@@ -369,8 +369,6 @@ class Model:
         else:
             saved_encoder = torch.load(encoder_name, map_location=torch.device('cpu'))
             saved_decoder = torch.load(decoder_name, map_location=torch.device('cpu'))
-        saved_encoder = torch.load(encoder_name)
-        saved_decoder = torch.load(decoder_name)
         self.encoder.load_state_dict(saved_encoder)
         self.decoder.load_state_dict(saved_decoder)
 
